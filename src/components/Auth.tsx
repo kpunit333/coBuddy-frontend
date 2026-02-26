@@ -1,26 +1,42 @@
-import { useState } from 'react';
-import Login from './Login';
-import Register from './Register';
+import { useState } from "react";
+import Login from "./Login";
+
+const handleAuthMode = (e) =>{
+    console.log("received : ",e);    
+    // setLogin((prev: boolean )=>!prev);
+  }
+
+  console.log("auth init");
+  
+  // const mouseOver = ()=>{
+  //   console.log("mouse over");
+  //   setCount((prev)=>(prev+1));    
+  // }
 
 const Auth = () => {
 
-  const [login, setLogin] = useState(true);
+  // const [login, setLogin] = useState(true);
+  const [count, setCount] = useState(1);
 
-  const handleAuthMode = (e: unknown) =>{
-    console.log("received : ",e);    
-    setLogin((prev: boolean )=>!prev);
+  const mouseOver = (e)=>{
+    console.log("mouse over");
+    setCount((prev)=>(prev+1));
   }
 
   return (
     <>
-      {
-        login ? <Login switchAuthMode={handleAuthMode} /> : <Register switchAuthMode={handleAuthMode} />
-      }
-      {/* <Box sx={{ textAlign: 'center', mt: 2 }}>
-        <Button variant="outlined" onClick={handleAuthMode}>
-          {login ? 'Switch to Register' : 'Switch to Login'}
-        </Button>
-      </Box> */}
+    <div className="m-4">
+      <Login/>
+    </div>
+    <div className="m-4">
+      <button type='button' onClick={(e)=>{handleAuthMode(e)}} >auth</button>
+    </div>
+    <div className="m-4">
+      <button type='button' onMouseOver={mouseOver} >mouse</button>
+    </div>
+    <div className="m-4">
+      {count}
+    </div>
     </>
   )
 }

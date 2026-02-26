@@ -1,6 +1,8 @@
 import ApiMethods from '../constants/ApiMethods';
 import httpConstant from '../constants/HttpConstants';
 import Api from './Api';
+import RequestInterceptor from './RequestInterceptor';
+import ResponseInterceptor from './ResponseInterceptor';
 
 const convertToQueryParams = (obj) => {
   return Object.keys(obj)
@@ -43,16 +45,23 @@ const ApiHandler = async (urlKey: string, queryObj?: object, body?: object) => {
     }
     
     const api = Api();
+    RequestInterceptor(api);
+    ResponseInterceptor(api);
 
     switch(method){
         case ApiMethods.GET:
             { 
                 const response = await api.get(host, queryObj);
-                return response;
+                return response.data;
                 break;
             }
 
         case ApiMethods.POST:
+          {
+                const response = await api.post(host, body);
+                return response.data;
+                break;
+          }
             break;
 
         default:

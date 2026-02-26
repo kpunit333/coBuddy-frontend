@@ -3,12 +3,12 @@ import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 const RequestInterceptor = (axiosInstance: AxiosInstance) => {
     axiosInstance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
-            const token = localStorage.getItem("accessToken");
+            const token = localStorage.getItem("accessToken") ?? "default token";
             console.log("old config: ", config);            
             if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-            
+                config.headers['Authorization'] = `Bearer ${token}`;
+            };
+
             console.log("new config: ", config);            
             return config;
         },

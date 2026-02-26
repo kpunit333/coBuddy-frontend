@@ -4,19 +4,23 @@ import ApiMethods from "./ApiMethods";
 const host = environment.baseURL;
 
 const httpConstant = {
-    GET_POST: {
+    "SAVE_POST": {
+        url: `${host}/posts`,
+        method: ApiMethods.POST
+    },
+    "GET_POST": {
         url: `${host}/posts`,
         method: ApiMethods.GET
     },
-    LOGIN : {
+    "LOGIN" : {
         url: `${host}/login`,
         method: ApiMethods.POST
     },
-    REGISTER : {
+    "REGISTER" : {
         url: `${host}/login`,
         method: ApiMethods.POST
     },
-    REFRESH_TOKEN : {
+    "REFRESH_TOKEN" : {
         url: `${host}/login`,
         method: ApiMethods.POST
     }

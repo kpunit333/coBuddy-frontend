@@ -3,19 +3,34 @@ import './App.css';
 import Auth from './components/Auth';
 import Home from './components/Home';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import { useEffect } from 'react';
 
-const App = () => {
-  
-  let isLoggedIn = false;
 
-  const setUser = () => {
+let isLoggedIn = false;
+
+  const setUser =()=>{
     const user = localStorage.getItem('user');
     const status: boolean = (user === "true");
-    console.log(status); 
+    console.log(user, status); 
     isLoggedIn = status;
-  }
+  };
 
-  setUser();  
+  setUser();
+
+const App = () => {
+
+  // let isLoggedIn = false;
+
+  // const setUser =()=>{
+  //   const user = localStorage.getItem('user');
+  //   const status: boolean = (user === "true");
+  //   console.log(user, status); 
+  //   isLoggedIn = status;
+  // };
+
+
+  // setUser();
+  
 
   return (
     <>

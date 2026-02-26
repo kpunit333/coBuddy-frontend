@@ -11,24 +11,22 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
+const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Register:', e);
+  };
 
-const Register = ({ switchAuthMode }: { switchAuthMode?: (e: unknown) => void }) => {
+  const authHandler = (e: unknown) => {
+    console.log("emitted : ", e);    
+  }
+
+const Register = () => {
   
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Register:', { username, email, password });
-  };
-
-  const authHandler = (e: unknown) => {
-    console.log("emitted : ", e);    
-    if (switchAuthMode) {
-      switchAuthMode(e);
-    }
-  }
+  
 
   return (
     <Container maxW="md" py={12}>

@@ -10,31 +10,85 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import useGet from '../customHooks/useGet';
+import usePost from '../customHooks/usePost';
 
-
-const Login = ({ switchAuthMode }: { switchAuthMode?: (e: unknown) => void }) => {
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login:', { email, password });
+    console.log('Login:', e);
   };
 
   const authHandler = (e: unknown) => {
     console.log("emitted : ", e);    
-    if (switchAuthMode) {
-      switchAuthMode(e);
-    }
+    // if (switchAuthMode) {
+      // switchAuthMode(e);
+    // }
   };
 
-  const display = () => {
-    console.log("hiii");
+const data: any[] = [
+    {
+    "userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+  },
+  {
+    "userId": 1,
+    "id": 2,
+    "title": "qui est esse",
+    "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+  },
+  {
+    "userId": 1,
+    "id": 3,
+    "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+    "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+  },
+  {
+    "userId": 1,
+    "id": 4,
+    "title": "eum et est occaecati",
+    "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
+  }
+  ];
+
+const Login = () => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [list, setList] = useState(data);
+
+  
+  const display = async () => {
+    console.log("display");
+    let res = await useGet('GET_POST');
+    let list = res;
+    setList(list);
+  };
+
+  const save = async () => {
+    console.log("display");
+    let data = {
+      userId: 1,
+      title: "title",
+      body: "body"
+    }
+    let res = await usePost('SAVE_POST', data);
+    let list = res;
+    console.log(list);    
   };
   
   return (
     <>
+      <div>
+        {
+          list?.map((item) => (
+            <Text as="span" color="blue.500" cursor="pointer" key={item.id}>
+              {item.id}
+            </Text>
+          ))
+        }
+      </div>
       <Container maxW="md" py={12}>
         <VStack gap={8}>
           <Heading size="xl">Login</Heading>
@@ -78,15 +132,12 @@ const Login = ({ switchAuthMode }: { switchAuthMode?: (e: unknown) => void }) =>
               <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={display}>
                 fetch data
               </Button>
+              <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={save}>
+                save data
+              </Button>
             </Stack>
           </Box>
         </VStack>
-        <Text as="span" color="blue.500" cursor="pointer" onClick={display}>
-          fetch text
-        </Text>
-        <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={display}>
-          fetch data
-        </Button>
       </Container>
     </>
   );

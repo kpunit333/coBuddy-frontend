@@ -1,19 +1,22 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { ChakraProvider } from '@chakra-ui/react'
-import { system } from '@chakra-ui/react/preset'
+import { ChakraProvider, createSystem } from '@chakra-ui/react'
+import { defaultConfig, system } from '@chakra-ui/react/preset'
 
-const systemContext = system;
+const systemContext = createSystem(defaultConfig);
 
-createRoot(document.getElementById('root')!).render(
-  
-  <StrictMode>
-    {/* <BrowserRouter> */}
-    <ChakraProvider value={systemContext} children={<App/>}>
-      {/* <App/> */}
-    </ChakraProvider>
-    {/* </BrowserRouter> */}
-  </StrictMode>,
-)
+const root = createRoot(document.getElementById('root')!);
+
+console.log(root);
+console.log(system);
+console.log(systemContext);
+console.log(system == systemContext);
+
+
+root.render(
+  <ChakraProvider value={systemContext} >
+    <App />
+  </ChakraProvider>
+  )
