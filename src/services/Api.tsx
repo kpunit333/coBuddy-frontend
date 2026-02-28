@@ -1,5 +1,5 @@
 import axios from "axios";
-import environment from "../environment/Environment.dev";
+import environment from "../environment/Environment";
 
 const Api = () => {
     return axios.create({

@@ -1,4 +1,4 @@
-import environment from "../environment/Environment.dev";
+import environment from "../environment/Environment";
 import ApiMethods from "./ApiMethods";
 
 const host = environment.baseURL;

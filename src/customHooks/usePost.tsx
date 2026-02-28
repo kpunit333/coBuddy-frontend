@@ -1,6 +1,6 @@
 import axios from 'axios';
 import ApiHandler from '../services/ApiHandler';
-import environment from '../environment/Environment.dev';
+import environment from '../environment/Environment';
 import httpConstant from '../constants/HttpConstants';
 
 const usePost = async (urlKey: string, body?: object) => {

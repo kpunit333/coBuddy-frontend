@@ -13,6 +13,9 @@ import { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import usePost from '../customHooks/usePost';
 
+import Loader from '../services/Loader';
+import { useLoader } from '../providers/LoaderProvider';
+
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Login:', e);
@@ -59,25 +62,34 @@ const Login = () => {
   const [list, setList] = useState(data);
 
   
-  const display = async () => {
-    console.log("display");
-    let res = await useGet('GET_POST');
-    let list = res;
+  const Display = async () => {
+    console.log("Display");
+    const res = await useGet('GET_POST');
+    const list = res;
     setList(list);
   };
 
   const save = async () => {
-    console.log("display");
-    let data = {
+    console.log("Display");
+    const data = {
       userId: 1,
       title: "title",
       body: "body"
     }
-    let res = await usePost('SAVE_POST', data);
-    let list = res;
+    const res = await usePost('SAVE_POST', data);
+    const list = res;
     console.log(list);    
   };
   
+  
+  const [loader, setLoader] = useState(false);
+  
+  const toggleLoader = () =>{
+    const { setShowLoader } = useLoader();
+    setLoader(!loader);
+    setShowLoader(loader);
+  }
+
   return (
     <>
       <div>
@@ -89,6 +101,9 @@ const Login = () => {
           ))
         }
       </div>
+      <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={toggleLoader}>
+        load
+      </Button>
       <Container maxW="md" py={12}>
         <VStack gap={8}>
           <Heading size="xl">Login</Heading>
@@ -129,7 +144,7 @@ const Login = () => {
                   Register
                 </Text>
               </Text>
-              <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={display}>
+              <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={Display}>
                 fetch data
               </Button>
               <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={save}>

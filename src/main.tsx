@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { ChakraProvider, createSystem } from '@chakra-ui/react'
 import { defaultConfig, system } from '@chakra-ui/react/preset'
+import { LoaderProvider } from './providers/LoaderProvider.tsx'
 
 const systemContext = createSystem(defaultConfig);
 
@@ -17,6 +18,8 @@ console.log(system == systemContext);
 
 root.render(
   <ChakraProvider value={systemContext} >
-    <App />
+    <LoaderProvider>
+      <App />
+    </LoaderProvider>
   </ChakraProvider>
   )
