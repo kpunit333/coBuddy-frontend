@@ -1,87 +1,174 @@
 import {
   Box,
   Button,
+  Checkbox,
   Container,
-  Field,
   Heading,
+  HStack,
+  IconButton,
   Input,
   Stack,
   Text,
   VStack
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { LuEye, LuEyeOff } from 'react-icons/lu';
 
-const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Register:', e);
-  };
+const Register = ({ switchAuthMode }) => {
 
-  const authHandler = (e: unknown) => {
-    console.log("emitted : ", e);    
-  }
-
-const Register = () => {
-  
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Container maxW="md" py={12}>
-      <VStack gap={8}>
-        <Heading size="xl">Register</Heading>
+    <>
+      <Container maxW="md" p={0}>
         <Box
-          as="form"
-          onSubmit={handleSubmit}
-          w="full"
-          bg="white"
-          p={8}
-          borderRadius="lg"
-          boxShadow="md"
+          p={{ base: 8, md: 10 }}
+          bg="brand.800"
+          backdropFilter="blur(20px)"
+          borderRadius="md"
+          border="1px solid"
+          borderColor="brand.200"
+          boxShadow="2xl"
         >
-          <Stack gap={4}>
-            <Field.Root required>
-              <Field.Label>Username</Field.Label>
-              <Input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
-              />
-            </Field.Root>
-            <Field.Root required>
-              <Field.Label>Email</Field.Label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-              />
-            </Field.Root>
-            <Field.Root required>
-              <Field.Label>Password</Field.Label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              />
-            </Field.Root>
-            <Button type="submit" colorScheme="blue" size="lg" w="full">
-              Register
-            </Button>
-            <Text textAlign="center" color="blue.500">
-              Already have an account?{' '}
-              <Text as="span" color="blue.500" cursor="pointer" onClick={authHandler}>
-                Login
+          <VStack gap={6} align="stretch">
+            <VStack gap={2} align="flex-start">
+              <Heading size="lg" color="brand.100" fontWeight="extrabold">
+                Create Account
+              </Heading>
+              <Text color="brand.200" fontSize="xs" textTransform="uppercase" letterSpacing="0.2em" fontWeight="bold">
+                Join the Nexus Network
               </Text>
-            </Text>
-          </Stack>
+            </VStack>
+
+            <Stack gap={5}>
+              <Stack gap={0}>
+                <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
+                  Full Name
+                </Text>
+                <Input
+                  variant="flushed"
+                  placeholder="John Doe"
+                  color="brand.50"
+                  px={2}
+                  borderBottomColor="brand.400"
+                  _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
+                  _placeholder={{ color: "brand.200" }}
+                />
+              </Stack>
+
+              <Stack gap={0}>
+                <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
+                  Operator ID / Email
+                </Text>
+                <Input
+                  variant="flushed"
+                  placeholder="username@nexus.core"
+                  color="brand.50"
+                  px={2}
+                  borderBottomColor="brand.400"
+                  _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
+                  _placeholder={{ color: "brand.200" }}
+                />
+              </Stack>
+
+              <Stack gap={0}>
+                <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
+                  Access Key
+                </Text>
+                <Box position="relative">
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    variant="flushed"
+                    placeholder="Create Password"
+                    color="brand.50"
+                    px={2}
+                    borderBottomColor="brand.400"
+                    _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
+                    _placeholder={{ color: "brand.200" }}
+                  />
+                  <IconButton
+                    aria-label="Toggle password"
+                    variant="ghost"
+                    position="absolute"
+                    right="0"
+                    bottom="1"
+                    size="sm"
+                    color="brand.600"
+                    _hover={{ color: "brand.50", backgroundColor: "brand.800" }}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <LuEyeOff /> : <LuEye />}
+                  </IconButton>
+                </Box>
+              </Stack>
+
+              <Stack gap={0}>
+                <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
+                  Verify Key
+                </Text>
+                <Input
+                  type="password"
+                  variant="flushed"
+                  placeholder="Repeat Password"
+                  color="brand.50"
+                  px={2}
+                  borderBottomColor="brand.400"
+                  _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
+                  _placeholder={{ color: "brand.200" }}
+                />
+              </Stack>
+
+              <HStack justify="flex-start" py={2}>
+                <Checkbox.Root defaultChecked colorPalette="brand">
+                  <Checkbox.HiddenInput />
+                  <Checkbox.Control bg="brand.0" borderColor="brand.300" borderRadius="none">
+                    <Checkbox.Indicator color="brand.1000" />
+                  </Checkbox.Control>
+                  <Checkbox.Label color="brand.50" fontSize="xs" fontWeight="bold" ml={2}>
+                    I agree to the Terms of Service
+                  </Checkbox.Label>
+                </Checkbox.Root>
+              </HStack>
+
+              <Button
+                bg="brand.500"
+                color="brand.0"
+                size="lg"
+                borderRadius="md"
+                fontSize="xs"
+                fontWeight="black"
+                textTransform="uppercase"
+                letterSpacing="widest"
+                h="14"
+                _hover={{
+                  bg: "brand.400",
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 0 30px rgba(122, 47, 255, 0.4)",
+                }}
+                _active={{ bg: "brand.600" }}
+              >
+                Register Account
+              </Button>
+            </Stack>
+
+            <HStack justify="center" gap={4}>
+              <Text color="brand.300" fontSize="xs" fontWeight="bold">Already have an account?</Text>
+              <Button
+                variant="plain"
+                color="brand.300"
+                fontSize="xs"
+                fontWeight="black"
+                textTransform="uppercase"
+                _hover={{ color: "brand.200" }}
+                onClick={switchAuthMode}
+              >
+                Login
+              </Button>
+            </HStack>
+          </VStack>
         </Box>
-      </VStack>
-    </Container>
+      </Container>
+    </>
   );
 };
 
