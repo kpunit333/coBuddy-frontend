@@ -1,12 +1,6 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { LoaderContext } from "../contexts/LoaderContext";
 import Loader from "../services/Loader";
-
-interface LoaderContextType {
-  showLoader: boolean;
-  setShowLoader: (value: boolean) => void;
-}
-
-export const LoaderContext = createContext<LoaderContextType | undefined>(undefined);
 
 export const LoaderProvider = ({ children }: { children: ReactNode }) => {
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -21,12 +15,4 @@ export const LoaderProvider = ({ children }: { children: ReactNode }) => {
       )}
     </LoaderContext.Provider>
   );
-};
-
- export const useLoader = () => {
-  const context = useContext(LoaderContext);
-  if (!context) {
-    throw new Error("useLoader must be used within LoaderProvider");
-  }
-  return context;
 };

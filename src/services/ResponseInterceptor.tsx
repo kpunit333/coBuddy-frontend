@@ -1,8 +1,9 @@
-import axios, { AxiosError, type AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosHeaders, type AxiosInstance } from "axios";
 import { useNavigate } from "react-router-dom";
 import httpConstant from "../constants/HttpConstants";
 
 interface CustomAxiosRequestConfig {
+  headers: AxiosHeaders
   _retry?: boolean;
 }
 
@@ -13,9 +14,7 @@ const Logout = () => {
 }
 
 const ResponseInterceptor = (axiosInstance: AxiosInstance) => {
-  axiosInstance.interceptors.response.use(
-    (response) => response,
-    async (error: AxiosError) => {
+  axiosInstance.interceptors.response.use((response) => response, async (error: AxiosError) => {
       const originalRequest = error.config as CustomAxiosRequestConfig;
 
       if (error?.response?.status === 401 && !originalRequest._retry) {

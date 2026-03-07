@@ -12,9 +12,7 @@ import {
 import { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import usePost from '../customHooks/usePost';
-
-import Loader from '../services/Loader';
-import { useLoader } from '../providers/LoaderProvider';
+import { useLoader } from '../contextHooks/useLoader';
 
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,11 +59,13 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [list, setList] = useState(data);
 
+  const { setShowLoader } = useLoader();
   
   const Display = async () => {
-    console.log("Display");
+    setShowLoader(true);
     const res = await useGet('GET_POST');
     const list = res;
+    setShowLoader(false);
     setList(list);
   };
 
@@ -80,15 +80,6 @@ const Login = () => {
     const list = res;
     console.log(list);    
   };
-  
-  
-  const [loader, setLoader] = useState(false);
-  
-  const toggleLoader = () =>{
-    const { setShowLoader } = useLoader();
-    setLoader(!loader);
-    setShowLoader(loader);
-  }
 
   return (
     <>
@@ -101,9 +92,6 @@ const Login = () => {
           ))
         }
       </div>
-      <Button type="button" colorPalette={'teal'} color={'black'} variant="outline" size="lg" w="full" onClick={toggleLoader}>
-        load
-      </Button>
       <Container maxW="md" py={12}>
         <VStack gap={8}>
           <Heading size="xl">Login</Heading>

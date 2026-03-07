@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
+import About from './components/About';
 import Auth from './components/Auth';
 import Home from './components/Home';
+import HomeLayout from './components/HomeLayout';
+import PageNotFound from './components/PageNotFound';
+import Profile from './components/Profile';
 import ProtectedRoutes from './components/ProtectedRoutes';
-import { useEffect } from 'react';
-
 
 let isLoggedIn = false;
 
@@ -19,19 +21,6 @@ let isLoggedIn = false;
 
 const App = () => {
 
-  // let isLoggedIn = false;
-
-  // const setUser =()=>{
-  //   const user = localStorage.getItem('user');
-  //   const status: boolean = (user === "true");
-  //   console.log(user, status); 
-  //   isLoggedIn = status;
-  // };
-
-
-  // setUser();
-  
-
   return (
     <>
       <BrowserRouter>
@@ -41,9 +30,9 @@ const App = () => {
             {
               !isLoggedIn && 
               <>
+                <Route path="/user" element={<Navigate to="/" />} />
                 <Route path="/" element={<Navigate to="/auth" />} />
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/home" element={<Navigate to="/" />} />
               </>
             }
 
@@ -52,9 +41,16 @@ const App = () => {
               <>
                 {/* Wrap your protected routes */}
                 <Route element={<ProtectedRoutes />}>
-                  <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/auth" element={<Navigate to="/" />} />
-                  <Route path="/home" element={<Home />} />
+                  <Route path="/" element={<Navigate to="/user" />} />
+                  <Route path="/user" element={<HomeLayout />} >
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route index element={<Navigate to="home" replace />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="about" element={<About />} />
+                    <Route path="profile" element={<Profile />} />
+                  </Route>
+                  <Route path="*" element={<PageNotFound />} />
                 </Route>
               </>
             }
