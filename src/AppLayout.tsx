@@ -1,10 +1,9 @@
-import { Box, ChakraProvider, createSystem, defaultConfig, HStack, Icon, Stack, Switch, Text, VStack } from '@chakra-ui/react';
+import { ChakraProvider, createSystem, defaultConfig, HStack, Stack, Switch, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { HiCheck, HiX } from 'react-icons/hi';
+import { LuCopyright } from 'react-icons/lu';
 import App from './App';
 import { LoaderProvider } from './providers/LoaderProvider';
-import { LuLayers, LuCopyright, LuCircleUserRound } from 'react-icons/lu';
-import { HiCheck, HiX  } from 'react-icons/hi';
-import NexusLogo from './components/NexusLogo';
-import { useState } from 'react';
 
 const purpleTheme = {
     // 0: { value: "#ffffff" }, // Pure Energy
@@ -119,8 +118,8 @@ const AppLayout = () => {
     const [context, setContext] = useState(systemContext);
 
     const toggleMode = (e) => {
-        let theme = themeMap[e.checked];
-        let newContext = createSystem(defaultConfig, theme);
+        const theme = themeMap[e.checked];
+        const newContext = createSystem(defaultConfig, theme);
         setContext(newContext);
     }
 

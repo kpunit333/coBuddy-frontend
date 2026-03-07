@@ -1,8 +1,8 @@
-import { Box, Button, Center, Checkbox, Circle, Container, Grid, GridItem, Heading, HStack, IconButton, Input, Stack, VStack, Text } from "@chakra-ui/react";
+import { Box, Center, Circle, Grid, GridItem, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import Register from "./Register";
+import { LuLayers } from "react-icons/lu";
 import Login from "./Login";
-import { LuLayers, LuEyeOff, LuEye } from "react-icons/lu";
+import Register from "./Register";
 
 const Auth = () => {
 
