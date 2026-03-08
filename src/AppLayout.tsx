@@ -47,6 +47,7 @@ const pD = {
     0: { value: "#ffffff" },
     50: { value: "#ffffff" },
     100: { value: "#f2e6ff" },
+    150: { value: "#f2e6ff69" },
     200: { value: "#cc99ff" },
     300: { value: "#a64dff" },
     400: { value: "#8000ff" }, // Primary "Authenticate" Button
@@ -70,6 +71,7 @@ const pL = {
     400: { value: "#a855f7" },
     300: { value: "#3d0a70" }, // Left Panel brand
     200: { value: "#4a1772" }, // Right Panel Base
+    150: { value: "#2f055384" },
     100: { value: "#2f0553" },
     50: { value: "#05001a" }, // Deepest Void
     1000: { value: "#05001a" }, // Deepest Void
@@ -129,7 +131,7 @@ const AppLayout = () => {
                 <LoaderProvider>
                     <App />
                 </LoaderProvider>
-                <HStack
+                {/* <HStack
                     position="absolute"
                     bottom="4"
                     color="brand.600"
@@ -142,7 +144,7 @@ const AppLayout = () => {
                 >
                     <LuCopyright size={12} />
                     <Text>All Rights Reserved</Text>
-                </HStack>
+                </HStack> */}
                 {/* <NexusLogo /> */}
                 <Stack 
                     position="fixed"

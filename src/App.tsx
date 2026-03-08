@@ -7,6 +7,9 @@ import HomeLayout from './components/HomeLayout';
 import PageNotFound from './components/PageNotFound';
 import Profile from './components/Profile';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import Chat from './components/Chat';
+import Notifications from './components/Notifications';
+import Settings from './components/Settings';
 
 let isLoggedIn = false;
 
@@ -44,11 +47,15 @@ const App = () => {
                   <Route path="/auth" element={<Navigate to="/" />} />
                   <Route path="/" element={<Navigate to="/user" />} />
                   <Route path="/user" element={<HomeLayout />} >
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+                    <Route path="*" element={<PageNotFound />} />
                     <Route index element={<Navigate to="home" replace />} />
-                    <Route path="home" element={<Home />} />
                     <Route path="about" element={<About />} />
+                    <Route path="chat" element={<Chat />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="notifications" element={<Notifications />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="settings" element={<Settings />} />
                   </Route>
                   <Route path="*" element={<PageNotFound />} />
                 </Route>
