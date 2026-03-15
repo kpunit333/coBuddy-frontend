@@ -1,7 +1,7 @@
 import axios from "axios";
 import environment from "../environment/Environment";
 
-const Api = () => {
+const AxiosInstance = () => {
     return axios.create({
         baseURL: environment.baseURL,
         headers: {
@@ -13,4 +13,4 @@ const Api = () => {
 // Setup interceptors
 // RequestInterceptor(Api());
 
-export default Api;
+export default AxiosInstance;

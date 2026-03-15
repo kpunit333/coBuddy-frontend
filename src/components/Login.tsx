@@ -13,6 +13,32 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import httpConstant from '../constants/HttpConstants';
+import { post } from '../customHooks/Api';
+
+let authData = {};
+
+const LoginHandler = async () => {
+  console.log(httpConstant["LOGIN_URL"]);
+  
+  const response = await post("LOGIN_URL", undefined, authData);  
+  console.log(response);  
+}
+
+const InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const value = event?.target?.value;
+  const name = event?.target?.name;
+
+  console.log(name, value);
+
+  authData = {
+    ...authData,
+    [name]: value
+  }
+
+  console.log(authData);  
+
+}
 
 const Login = ({ switchAuthMode }) => {
 
@@ -47,12 +73,14 @@ const Login = ({ switchAuthMode }) => {
                 </Text>
                 <Input
                   variant="flushed"
+                  name='username'
                   placeholder="Username"
                   color="brand.50"
                   px={2}
                   borderBottomColor="brand.400"
                   _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                   _placeholder={{ color: "brand.200" }}
+                  onChange={InputChangeHandler}
                 />
               </Stack>
 
@@ -64,12 +92,14 @@ const Login = ({ switchAuthMode }) => {
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     variant="flushed"
+                    name='password'
                     placeholder="Password"
                     color="brand.50"
                     px={2}
                     borderBottomColor="brand.400"
                     _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                     _placeholder={{ color: "brand.200" }}
+                    onChange={InputChangeHandler}
                   />
                   <IconButton
                     aria-label="Toggle password"
@@ -119,6 +149,7 @@ const Login = ({ switchAuthMode }) => {
                   boxShadow: "0 0 30px rgba(122, 47, 255, 0.4)",
                 }}
                 _active={{ bg: "brand.600" }}
+                onClick={LoginHandler}
               >
                 Authenticate Entry
               </Button>

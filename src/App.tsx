@@ -33,6 +33,7 @@ const App = () => {
             {
               !isLoggedIn && 
               <>
+                <Route path="*" element={<Navigate to="/" />} />
                 <Route path="/user" element={<Navigate to="/" />} />
                 <Route path="/" element={<Navigate to="/auth" />} />
                 <Route path="/auth" element={<Auth />} />

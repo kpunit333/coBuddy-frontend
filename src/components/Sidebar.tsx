@@ -1,6 +1,6 @@
 import { Box, Circle, Flex, Heading, IconButton, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { LuBell, LuChevronLeft, LuChevronRight, LuHouse, LuInfo, LuLayers, LuLayoutDashboard, LuLogOut, LuMessageCircle, LuPlus, LuSearch, LuSettings, LuUser, LuUsers } from 'react-icons/lu';
+import { LuBell, LuChevronLeft, LuChevronRight, LuHouse, LuInfo, LuLayers, LuLogOut, LuMessageCircle, LuPlus, LuSearch, LuSettings, LuUser } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ApiMethods from '../constants/ApiMethods';
 import httpConstant from '../constants/HttpConstants';
-import Api from './Api';
+import environment from '../environment/Environment';
+import AxiosInstance from './AxiosInstance';
 import RequestInterceptor from './RequestInterceptor';
 import ResponseInterceptor from './ResponseInterceptor';
 
@@ -9,8 +10,8 @@ const sleep = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-const goToSleep = async(duration: number) => {
-  await sleep(duration*1000);
+const goToSleep = async (duration: number) => {
+  await sleep(duration * 1000);
 }
 
 const convertToQueryParams = (obj: any) => {
@@ -29,7 +30,7 @@ const convertToQueryParams = (obj: any) => {
       // Handle nested objects
       if (typeof value === "object") {
         return Object.keys(value)
-          .map(subKey => 
+          .map(subKey =>
             `${encodeURIComponent(`${key}[${subKey}]`)}=${encodeURIComponent(value[subKey])}`
           )
           .join("&");
@@ -40,47 +41,56 @@ const convertToQueryParams = (obj: any) => {
     .join("&");
 }
 
-const ApiHandler = async (urlKey: string, queryObj?: object, body?: object) => {
+const ApiHandler = async (urlKey: string, method: string, pathVariable?: string, queryObj?: object, body?: object) => {
 
-    const target = httpConstant[urlKey];
-    const url = target?.url;
-    const method = target?.method;
+  const baseURL = environment.baseURL;
 
-    let host = `${url}`;
+  const endpoint = httpConstant[urlKey];
 
-    if(queryObj){
-        const queryParams = convertToQueryParams(queryObj);
-        host = `${host}?${queryParams}`;
+  let host = `${baseURL}/${endpoint}`;
+
+  if (pathVariable) {
+    host = `${host}/${pathVariable}`;
+  }
+
+  if (queryObj) {
+    const queryParams = convertToQueryParams(queryObj);
+    host = `${host}?${queryParams}`;
+  }
+
+  const api = AxiosInstance();
+
+  RequestInterceptor(api);
+  ResponseInterceptor(api);
+
+  await goToSleep(5);
+
+  try {
+    switch (method) {
+      case ApiMethods.GET:
+        {
+          const response = await api.get(host, queryObj);
+          return response.data;
+        }
+
+      case ApiMethods.POST:
+        {
+          const response = await api.post(host, body);
+          return response.data;
+        }
+
+      default:
+        break;
     }
-    
-    const api = Api();
-    RequestInterceptor(api);
-    ResponseInterceptor(api);
-    
-    await goToSleep(5);
+  } 
+  catch (error) {
+    console.error("API Error:", error);
+  }
+  finally {
+    console.log("end");
+  }
 
-    try {
-      switch(method){
-        case ApiMethods.GET:
-          {
-            const response = await api.get(host, queryObj);
-            return response.data;
-          }
-
-        case ApiMethods.POST:
-          {
-            const response = await api.post(host, body);
-            return response.data;
-          }
-
-        default:
-          break;
-      }
-    } finally {
-      console.log("end");      
-    }
-
-    return null;
+  return null;
 }
 
 

@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosHeaders, type AxiosInstance } from "axios";
+import { AxiosError, AxiosHeaders, type AxiosInstance } from "axios";
 import { useNavigate } from "react-router-dom";
-import httpConstant from "../constants/HttpConstants";
+import RefreshHandler from "./RefreshHandler";
 
 interface CustomAxiosRequestConfig {
   headers: AxiosHeaders
@@ -17,26 +17,23 @@ const ResponseInterceptor = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use((response) => response, async (error: AxiosError) => {
       const originalRequest = error.config as CustomAxiosRequestConfig;
 
+      console.log(error);
+      console.log(error.config);
+      
+
       if (error?.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
-          const refreshToken = localStorage.getItem("refreshToken");
-
-          const res = await axios.post(
-            httpConstant.REFRESH_TOKEN.url,
-            { refreshToken }
-          );
-
-          const newAccessToken = res.data.accessToken;
-
-          localStorage.setItem("accessToken", newAccessToken);
+          
+          await RefreshHandler();
 
           // Update header and retry original request
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          originalRequest.headers.Authorization = localStorage.getItem("accessToken");
           return axiosInstance(originalRequest);
           
-        } catch (err) {
+        } 
+        catch (err) {
           Logout();
           return Promise.reject(err);
         }

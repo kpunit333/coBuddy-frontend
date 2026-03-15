@@ -1,29 +1,30 @@
-import environment from "../environment/Environment";
-import ApiMethods from "./ApiMethods";
-
-const host = environment.baseURL;
+// const httpConstant = {
+//     SAVE_POST: {
+//         url: `posts`,
+//         method: ApiMethods.POST
+//     },
+//     GET_POST: {
+//         url: `posts`,
+//         method: ApiMethods.GET
+//     },
+//     LOGIN : {
+//         url: `login`,
+//         method: ApiMethods.POST
+//     },
+//     REGISTER : {
+//         url: `login`,
+//         method: ApiMethods.POST
+//     },
+//     REFRESH_TOKEN : {
+//         url: `login`,
+//         method: ApiMethods.POST
+//     }
+// }
 
 const httpConstant = {
-    "SAVE_POST": {
-        url: `${host}/posts`,
-        method: ApiMethods.POST
-    },
-    "GET_POST": {
-        url: `${host}/posts`,
-        method: ApiMethods.GET
-    },
-    "LOGIN" : {
-        url: `${host}/login`,
-        method: ApiMethods.POST
-    },
-    "REGISTER" : {
-        url: `${host}/login`,
-        method: ApiMethods.POST
-    },
-    "REFRESH_TOKEN" : {
-        url: `${host}/login`,
-        method: ApiMethods.POST
-    }
+    POST_URL: `posts`,
+    LOGIN_URL : `auth/login`,
+    SIGNUP_URL : `auth/signup`,
 }
 
 export default httpConstant;
