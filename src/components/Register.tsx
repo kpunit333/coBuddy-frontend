@@ -13,6 +13,32 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
+import { post } from '../customHooks/Api';
+import httpConstant from '../constants/HttpConstants';
+
+let authData = {};
+
+const AuthHandler = async () => {
+  console.log(httpConstant["SIGNUP_URL"]);
+  
+  const response = await post("SIGNUP_URL", undefined, authData);  
+  console.log(response);  
+}
+
+const InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const value = event?.target?.value;
+  const name = event?.target?.name;
+
+  console.log(name, value);
+
+  authData = {
+    ...authData,
+    [name]: value
+  }
+
+  console.log(authData);  
+
+}
 
 const Register = ({ switchAuthMode }) => {
 
@@ -47,12 +73,31 @@ const Register = ({ switchAuthMode }) => {
                 </Text>
                 <Input
                   variant="flushed"
+                  name='fullname'
                   placeholder="John Doe"
                   color="brand.50"
                   px={2}
                   borderBottomColor="brand.400"
                   _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                   _placeholder={{ color: "brand.200" }}
+                  onChange={InputChangeHandler}
+                />
+              </Stack>
+
+              <Stack gap={0}>
+                <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
+                  Username
+                </Text>
+                <Input
+                  variant="flushed"
+                  name='username'
+                  placeholder="john_doe"
+                  color="brand.50"
+                  px={2}
+                  borderBottomColor="brand.400"
+                  _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
+                  _placeholder={{ color: "brand.200" }}
+                  onChange={InputChangeHandler}
                 />
               </Stack>
 
@@ -62,12 +107,14 @@ const Register = ({ switchAuthMode }) => {
                 </Text>
                 <Input
                   variant="flushed"
+                  name='emailid'
                   placeholder="username@nexus.core"
                   color="brand.50"
                   px={2}
                   borderBottomColor="brand.400"
                   _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                   _placeholder={{ color: "brand.200" }}
+                  onChange={InputChangeHandler}
                 />
               </Stack>
 
@@ -79,12 +126,14 @@ const Register = ({ switchAuthMode }) => {
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     variant="flushed"
+                    name='password'
                     placeholder="Create Password"
                     color="brand.50"
                     px={2}
                     borderBottomColor="brand.400"
                     _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                     _placeholder={{ color: "brand.200" }}
+                    onChange={InputChangeHandler}
                   />
                   <IconButton
                     aria-label="Toggle password"
@@ -109,6 +158,7 @@ const Register = ({ switchAuthMode }) => {
                 <Input
                   type="password"
                   variant="flushed"
+                  name='confirm_password'
                   placeholder="Repeat Password"
                   color="brand.50"
                   px={2}
@@ -146,6 +196,7 @@ const Register = ({ switchAuthMode }) => {
                   boxShadow: "0 0 30px rgba(122, 47, 255, 0.4)",
                 }}
                 _active={{ bg: "brand.600" }}
+                onClick={AuthHandler}
               >
                 Register Account
               </Button>

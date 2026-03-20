@@ -18,7 +18,7 @@ import { post } from '../customHooks/Api';
 
 let authData = {};
 
-const LoginHandler = async () => {
+const AuthHandler = async () => {
   console.log(httpConstant["LOGIN_URL"]);
   
   const response = await post("LOGIN_URL", undefined, authData);  
@@ -149,7 +149,7 @@ const Login = ({ switchAuthMode }) => {
                   boxShadow: "0 0 30px rgba(122, 47, 255, 0.4)",
                 }}
                 _active={{ bg: "brand.600" }}
-                onClick={LoginHandler}
+                onClick={AuthHandler}
               >
                 Authenticate Entry
               </Button>
