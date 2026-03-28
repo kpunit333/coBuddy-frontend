@@ -20,29 +20,20 @@ const AppContent = () => {
   return (
     <div className="App">
       <Routes>
-        {!isLoggedIn ? (
-          <>
-            <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/user" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Navigate to="/auth" replace />} />
-            <Route path="/auth" element={<Auth />} />
-          </>
-        ) : (
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/auth" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<Navigate to="/user" replace />} />
-            <Route path="/user" element={<HomeLayout />}>
-              <Route path="*" element={<PageNotFound />} />
-              <Route index element={<Navigate to="home" replace />} />
-              <Route path="about" element={<About />} />
-              <Route path="chat" element={<Chat />} />
-              <Route path="home" element={<Home />} />
-              <Route path="notifications" element={<Notifications />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
+        <Route path="/auth" element={!isLoggedIn ? <Auth /> : <Navigate to="/user/home" replace />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/user" element={<HomeLayout />}>
+            <Route path="*" element={<PageNotFound />} />
+            <Route index element={<Navigate to="home" replace />} />
+            <Route path="about" element={<About />} />
+            <Route path="chat" element={<Chat />} />
+            <Route path="home" element={<Home />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
-        )}
+        </Route>
+        <Route path="*" element={<Navigate to={isLoggedIn ? "/user/home" : "/auth"} replace />} />
       </Routes>
     </div>
   );
