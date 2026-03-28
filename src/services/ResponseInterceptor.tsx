@@ -29,8 +29,8 @@ const ResponseInterceptor = (axiosInstance: AxiosInstance) => {
           
           await RefreshHandler();
 
-// Update header and retry original request
-          originalRequest.headers.Authorization = StorageService.get("tokens")?.accessToken || '';
+          // Update header and retry original request
+          originalRequest.headers["Authorization"] = StorageService.get("tokens")?.accessToken || '';
           return axiosInstance(originalRequest);
           
         } 

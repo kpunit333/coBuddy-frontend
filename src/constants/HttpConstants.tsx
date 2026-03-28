@@ -25,6 +25,7 @@ const httpConstant = {
     POST_URL: `posts`,
     LOGIN_URL : `auth/login`,
     SIGNUP_URL : `auth/signup`,
+    USERS_URL : `users/getUsers`,
 }
 
 export default httpConstant;

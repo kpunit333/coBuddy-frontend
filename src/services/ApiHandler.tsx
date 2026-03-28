@@ -6,6 +6,12 @@ import AxiosInstance from './AxiosInstance';
 import RequestInterceptor from './RequestInterceptor';
 import ResponseInterceptor from './ResponseInterceptor';
 
+interface ResponseBody {
+  success: boolean;
+  data: any;
+  message: string;
+}
+
 const convertToQueryParams = (obj: any) => {
   return Object.keys(obj)
     .filter(key => obj[key] !== undefined && obj[key] !== null)
@@ -33,7 +39,7 @@ const convertToQueryParams = (obj: any) => {
     .join("&");
 }
 
-const ApiHandler = async (urlKey: string, method: string, pathVariable?: string, queryObj?: object, body?: object) => {
+const ApiHandler = async (urlKey: string, method: string, pathVariable?: string, queryObj?: object, body?: object): Promise<ResponseBody> => {
 
   const baseURL = environment.baseURL;
 
@@ -80,7 +86,7 @@ const ApiHandler = async (urlKey: string, method: string, pathVariable?: string,
     console.log("end");
   }
 
-  return null;
+  return { success: false, data: null, message: "An error occurred" };
 }
 
 

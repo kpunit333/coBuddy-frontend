@@ -1,13 +1,11 @@
+import axios from 'axios';
 import StorageService from './StorageService';
 
 const RefreshHandler = async () => {
-    // const refreshToken = StorageService.getLocal("refreshToken");
-    // const res = await axios.post("http://localhost:8080/auth/refresh", { refreshToken });
-    const res = {
-        tokens: {
-            accessToken: "new_access_token"
-        }
-    }
+    const refreshToken = StorageService.get("tokens")?.refreshToken;
+    const response = await axios.post("http://localhost:8000/api/v1/auth/refresh", { refreshToken })
+    const res = response.data.data;
+    
     StorageService.set("tokens", res.tokens);
 };
 

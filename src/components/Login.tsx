@@ -39,7 +39,7 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
     setShowLoader(true);
     try {
       const response = await post("LOGIN_URL", undefined, data);
-      if (response.success) {
+      if (response.success && response.data.user && response.data.tokens) {
         login(response.data);
         console.log("login successful");
         navigate('/user');

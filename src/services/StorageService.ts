@@ -12,6 +12,9 @@ class StorageService {
 
   static get(key: string): StorageItem | null {
     const item = this.sessionStorage.getItem(key);
+    if(item?.includes("undefined") || item?.includes("null")) {
+      return null;
+    }
     return JSON.parse(item || 'null');
   }
 
