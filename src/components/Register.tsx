@@ -40,7 +40,7 @@ const InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 
 }
 
-const Register = ({ switchAuthMode }) => {
+const Register = ({ switchAuthMode }:{ switchAuthMode: () => void } ) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
