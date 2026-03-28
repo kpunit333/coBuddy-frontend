@@ -6,7 +6,7 @@ class StorageService {
   private static sessionStorage = sessionStorage;
 
   // Session Storage
-  static set(key: string, value: StorageItem | string): void {
+  static set(key: string, value: any): void {
     this.sessionStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
   }
 

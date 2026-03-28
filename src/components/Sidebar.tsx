@@ -126,7 +126,7 @@ const Sidebar = ({ toggleMenu }: { toggleMenu: (isCollapsed: boolean) => void })
 
                 {/* Bottom Actions */}
                 <Box borderColor="brand.150">
-                    <Box py={1} borderColor="brand.150">
+                    <VStack py={1} align="stretch" gap={2} flex="1">   
                         {
                             lowerSideItemList.map((item)=>(
                                 <Box key={item.path} onClick={()=>{handleActiveItem(item)}}>
@@ -134,7 +134,7 @@ const Sidebar = ({ toggleMenu }: { toggleMenu: (isCollapsed: boolean) => void })
                                 </Box>
                             ))
                         }
-                    </Box>
+                    </VStack>
                     <Box py={1} borderTop="1px solid"  borderColor="brand.150">
                         <SidebarItem active={false} icon={<LuLogOut />} label="Logout" isCollapsed={isCollapsed} />
                     </Box>

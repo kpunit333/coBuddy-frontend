@@ -2,17 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { loginSuccess, logout, setToken, setUser } from '../store/authSlice';
 import { useEffect } from 'react';
+import StorageService from '../services/StorageService';
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoggedIn, user, tokens } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    const tokens = JSON.parse(localStorage.getItem('tokens') || 'null');
+    const tokens = StorageService.get('tokens');
     if (tokens && !isLoggedIn) {
       dispatch(setToken(tokens));
     }
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const user = StorageService.get('user');
     if (user) {
       dispatch(setUser(user));
     }

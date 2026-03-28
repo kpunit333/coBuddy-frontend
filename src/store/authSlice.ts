@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import StorageService from '../services/StorageService';
 
 interface UserState {
   isLoggedIn: boolean;
@@ -21,15 +22,15 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.user = action.payload.user;
       state.tokens = action.payload.tokens;
-      localStorage.setItem('tokens', JSON.stringify(action.payload.tokens));
-      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      StorageService.set('tokens', action.payload.tokens);
+      StorageService.set('user', action.payload.user);
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = null;
       state.tokens = null;
-      localStorage.removeItem('tokens');
-      localStorage.removeItem('user');
+      StorageService.clear('tokens');
+      StorageService.clear('user');
     },
     setToken: (state, action: PayloadAction<object>) => {
       state.tokens = action.payload;
