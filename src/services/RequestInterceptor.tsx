@@ -1,9 +1,11 @@
 import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import StorageService from "./StorageService";
 
 const RequestInterceptor = (axiosInstance: AxiosInstance) => {
     axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
-            const accessToken = JSON.parse(localStorage.getItem("tokens") || "{}")?.accessToken ?? "default token";
+            const tokens = StorageService.get("tokens");
+            const accessToken = tokens?.accessToken ?? "default token";
             
             if (accessToken) {
                 config.headers['Authorization'] = `Bearer ${accessToken}`;

@@ -1,6 +1,7 @@
 import { AxiosError, AxiosHeaders, type AxiosInstance } from "axios";
 import { useNavigate } from "react-router-dom";
 import RefreshHandler from "./RefreshHandler";
+import StorageService from "./StorageService";
 
 interface CustomAxiosRequestConfig {
   headers: AxiosHeaders
@@ -9,7 +10,7 @@ interface CustomAxiosRequestConfig {
 
 const Logout = () => {
     const navigate = useNavigate();
-    localStorage.clear();
+    StorageService.clearAll();
     navigate('/');
 }
 
@@ -28,8 +29,8 @@ const ResponseInterceptor = (axiosInstance: AxiosInstance) => {
           
           await RefreshHandler();
 
-          // Update header and retry original request
-          originalRequest.headers.Authorization = localStorage.getItem("accessToken");
+// Update header and retry original request
+          originalRequest.headers.Authorization = StorageService.get("tokens")?.accessToken || '';
           return axiosInstance(originalRequest);
           
         } 

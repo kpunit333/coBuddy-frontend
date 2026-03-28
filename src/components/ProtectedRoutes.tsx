@@ -1,7 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
+import StorageService from '../services/StorageService';
+import { Outlet, Navigate } from "react-router-dom";
 
 const ProtectedRoutes = () => {
-  const isLoggedIn = JSON.parse(localStorage.getItem('tokens') ?? "null")?.accessToken ?? null;
+  const tokens = StorageService.get('tokens');
+  const isLoggedIn = tokens?.accessToken ?? null;
   return isLoggedIn ? <Outlet/> : <Navigate to="/auth" />;
 }
 
