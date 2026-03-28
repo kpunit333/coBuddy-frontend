@@ -32,16 +32,16 @@ const authSlice = createSlice({
       StorageService.clear('tokens');
       StorageService.clear('user');
     },
-    setToken: (state, action: PayloadAction<object>) => {
-      state.tokens = action.payload;
+    setAuthState: (state, action: PayloadAction<{ user: object; tokens: object }>) => {
       state.isLoggedIn = true;
-    },
-    setUser: (state, action: PayloadAction<object>) => {
-      state.user = action.payload;
-    },
+      state.user = action.payload.user;
+      state.tokens = action.payload.tokens;
+      StorageService.set('tokens', action.payload.tokens);
+      StorageService.set('user', action.payload.user);
+    }
   },
 });
 
-export const { loginSuccess, logout, setToken, setUser } = authSlice.actions;
+export const { loginSuccess, logout, setAuthState } = authSlice.actions;
 export default authSlice.reducer;
 

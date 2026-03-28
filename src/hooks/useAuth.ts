@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../store';
-import { loginSuccess, logout, setToken, setUser } from '../store/authSlice';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import StorageService from '../services/StorageService';
+import type { AppDispatch, RootState } from '../store';
+import { loginSuccess, logout, setAuthState } from '../store/authSlice';
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -10,12 +10,11 @@ export const useAuth = () => {
 
   useEffect(() => {
     const tokens = StorageService.get('tokens');
-    if (tokens && !isLoggedIn) {
-      dispatch(setToken(tokens));
-    }
     const user = StorageService.get('user');
-    if (user) {
-      dispatch(setUser(user));
+    if (tokens && user) {
+      dispatch(setAuthState({ user, tokens }));
+    }else{
+      dispatch(logout());
     }
   }, [dispatch, isLoggedIn]);
 
