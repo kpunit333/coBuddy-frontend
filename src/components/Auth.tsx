@@ -22,7 +22,7 @@ const Auth = () => {
         justifyContent="center"
         bg="purple.950"
       >
-        <Box width="100%" bg="brand.900" overflow="hidden" >
+        <Box width="100%" bg="brand.900" overflow="auto" >
           <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} h="100vh">
 
             <GridItem

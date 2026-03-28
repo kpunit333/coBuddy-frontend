@@ -5,7 +5,7 @@ const version = 'v1';
 
 
 const environment = {
-    baseURL: `${protocol}://${url}:${port}/${version}/api`
+    baseURL: `${protocol}://${url}:${port}/api/${version}`
     // baseURL: `https://jsonplaceholder.typicode.com`
 }
 
