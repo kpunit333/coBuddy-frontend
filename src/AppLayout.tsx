@@ -118,7 +118,7 @@ const AppLayout = () => {
 
     const [context, setContext] = useState(systemContext);
 
-    const toggleMode = (e) => {
+    const toggleMode = (e: any) => {
         const theme = themeMap[e.checked];
         const newContext = createSystem(defaultConfig, theme);
         setContext(newContext);

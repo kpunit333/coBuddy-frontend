@@ -1,6 +1,6 @@
 import { HStack, Box, Text } from "@chakra-ui/react";
 
-const SidebarItem = ({ icon, label, active, isCollapsed }) => (
+const SidebarItem = ({ icon, label, active, isCollapsed }: { icon: React.ReactNode; label: string; active: boolean; isCollapsed: boolean }) => (
   <HStack
     p={2}
     bg={active ? "brand.100" : "transparent"}

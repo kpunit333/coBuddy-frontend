@@ -50,13 +50,13 @@ const lowerSideItemList = [
     },
 ]
 
-const Sidebar = ({ toggleMenu }) => {
+const Sidebar = ({ toggleMenu }: { toggleMenu: (isCollapsed: boolean) => void }) => {
 
     const [ activeItem, setActiveItem] = useState(upperSideItemList[0]);
     const navigate = useNavigate();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const handleActiveItem = (item) => {
+    const handleActiveItem = (item: any) => {
         setActiveItem(item);
         const itemPath = item?.path ?? "";
         navigate(itemPath);

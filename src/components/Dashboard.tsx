@@ -1,6 +1,6 @@
 import { Box, Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 
-const StatCard = ({ label, value }) => (
+const StatCard = ({ label, value }: any ) => (
     <Box p={6} bg="brand.800" border="1px solid" borderColor="brand.200" borderRadius="md">
         <Text fontSize="xs" fontWeight="black" textTransform="uppercase" mb={2} color="brand.50" >{label}</Text>
         <Heading size="xl" fontWeight="black" color="brand.300">{value}</Heading>
