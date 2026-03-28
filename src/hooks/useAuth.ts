@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
-import { loginSuccess, logout, setToken } from '../store/authSlice';
+import { loginSuccess, logout, setToken, setUser } from '../store/authSlice';
 import { useEffect } from 'react';
 
 export const useAuth = () => {
@@ -11,6 +11,10 @@ export const useAuth = () => {
     const tokens = JSON.parse(localStorage.getItem('tokens') || 'null');
     if (tokens && !isLoggedIn) {
       dispatch(setToken(tokens));
+    }
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user) {
+      dispatch(setUser(user));
     }
   }, [dispatch, isLoggedIn]);
 

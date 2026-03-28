@@ -1,6 +1,12 @@
-import { Flex, Heading, HStack, Circle, Text, Avatar, Box } from "@chakra-ui/react"
+import { Flex, Heading, HStack, Text, Avatar, Box } from "@chakra-ui/react"
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
+
+  const { user } = useAuth();
+  console.log(user);
+  
+
   return (
     <>
       <Flex h="60px" px={8} alignItems="center" justifyContent="space-between" borderBottom="2px solid" borderColor="brand.150">
@@ -14,7 +20,7 @@ const Header = () => {
             mt={1}
           >
             <Text > Welcome, </Text>
-            <Text > Username </Text>
+            <Text > { user?.username } </Text>
           </HStack>
           <Box p={0.5} border="2px solid" borderColor="brand.500" borderRadius={"30px"} >
             <Avatar.Root size={"xs"}>

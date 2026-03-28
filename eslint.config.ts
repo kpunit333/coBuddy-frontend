@@ -3,7 +3,17 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import { defineConfig, globalIgnores, FlatConfig } from 'eslint/config'
+
+const tsConfig: FlatConfig.ConfigArray = tseslint.configs.recommended
+
+const typescriptEslint: FlatConfig.ConfigArray = tseslint.configs.recommended.map((config) => ({
+  ...config,
+  rules: {
+    ...config.rules,
+    '@typescript-eslint/no-explicit-any': 'off',
+  },
+}))
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -11,7 +21,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
+      ...typescriptEslint,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
@@ -19,5 +29,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    }
   },
 ])
+
