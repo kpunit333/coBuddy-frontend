@@ -31,7 +31,7 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const { confirm_password, ...submitData } = data;
+      const { ...submitData } = data;
       const response = await post("SIGNUP_URL", undefined, submitData);
       if (response.success) {
         console.log("registration successful");        
@@ -107,7 +107,7 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
 
                 <Stack gap={0}>
                   <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
-                    Operator ID / Email
+                    Email
                   </Text>
                   <Input
                     variant="flushed"
@@ -118,14 +118,14 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
                     borderBottomColor="brand.400"
                     _focus={{ borderBottomColor: "brand.300", borderBottomWidth: "2px" }}
                     _placeholder={{ color: "brand.200" }}
-                    {...register('emailid')}
+                    {...register('emailId')}
                   />
-                  {errors.emailid && <Text color="red.600" paddingX={2} paddingY={0}  fontSize="xs">{errors.emailid.message}</Text>}
+                  {errors.emailId && <Text color="red.600" paddingX={2} paddingY={0}  fontSize="xs">{errors.emailId.message}</Text>}
                 </Stack>
 
                 <Stack gap={0}>
                   <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
-                    Access Key
+                    Password
                   </Text>
                   <Box position="relative">
                     <Input
@@ -159,7 +159,7 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
 
                 <Stack gap={0}>
                   <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
-                    Verify Key
+                    Confirm Password
                   </Text>
                   <Input
                     type="password"
@@ -206,7 +206,7 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
                   }}
                   _active={{ bg: "brand.600" }}
                 >
-                  Register Account
+                  Register
                 </Button>
               </Stack>
             </form>

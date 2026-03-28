@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { LoaderContext } from "../contexts/LoaderContext";
-import Loader from "../services/Loader";
+import Loader from "../utils/Loader";
 
 export const LoaderProvider = ({ children }: { children: ReactNode }) => {
   const [showLoader, setShowLoader] = useState<boolean>(false);

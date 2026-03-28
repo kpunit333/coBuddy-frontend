@@ -19,12 +19,16 @@ import { useNavigate } from 'react-router-dom';
 import type z from 'zod';
 import { post } from '../customHooks/Api';
 import { loginSchema } from '../schemas/auth';
+import { useLoader } from '../hooks/useLoader';
+import { useAuth } from '../hooks/useAuth';
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setShowLoader } = useLoader();
+  const { login } = useAuth();
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -32,20 +36,23 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    setShowLoader(true);
     try {
       const response = await post("LOGIN_URL", undefined, data);
       if (response.success) {
-        localStorage.setItem('user', 'true');
+        login(response.data);
         console.log("login successful");
-        
         navigate('/user');
       } else {
         console.log("login failed");
       }
     } catch (error) {
       console.log("login error", error);
+    } finally {
+      setShowLoader(false);
     }
   };
+
 
   return (
     <>
@@ -73,7 +80,7 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
               <Stack gap={5}>
                 <Stack gap={0}>
                   <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
-                    Operator ID
+                    Username
                   </Text>
                   <Input
                     variant="flushed"
@@ -92,7 +99,7 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
 
                 <Stack gap={0}>
                   <Text fontSize="xs" fontWeight="bold" color="brand.100" textTransform="uppercase" letterSpacing="widest">
-                    Access Key
+                    Password
                   </Text>
                   <Box position="relative">
                     <Input
@@ -132,7 +139,7 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
                       <Checkbox.Indicator color="brand.1000" />
                     </Checkbox.Control>
                     <Checkbox.Label color="brand.50" fontSize="xs" fontWeight="bold" ml={2}>
-                      Trust this device
+                      Remember Me
                     </Checkbox.Label>
                   </Checkbox.Root>
                   <Button variant="ghost" color="brand.300" fontSize="xs" fontWeight="bold" textTransform="uppercase">
@@ -158,7 +165,7 @@ const Login = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
                   }}
                   _active={{ bg: "brand.600" }}
                 >
-                  Authenticate Entry
+                  Login
                 </Button>
               </Stack>
             </form>

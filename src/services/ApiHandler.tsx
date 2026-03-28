@@ -6,14 +6,6 @@ import AxiosInstance from './AxiosInstance';
 import RequestInterceptor from './RequestInterceptor';
 import ResponseInterceptor from './ResponseInterceptor';
 
-const sleep = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-
-const goToSleep = async (duration: number) => {
-  await sleep(duration * 1000);
-}
-
 const convertToQueryParams = (obj: any) => {
   return Object.keys(obj)
     .filter(key => obj[key] !== undefined && obj[key] !== null)
@@ -62,8 +54,6 @@ const ApiHandler = async (urlKey: string, method: string, pathVariable?: string,
 
   RequestInterceptor(api);
   ResponseInterceptor(api);
-
-  await goToSleep(5);
 
   try {
     switch (method) {

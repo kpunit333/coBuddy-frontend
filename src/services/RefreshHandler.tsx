@@ -3,12 +3,11 @@ const RefreshHandler = async () => {
     // const refreshToken = localStorage.getItem("refreshToken");
     //   const res = await axios.post("http://localhost:8080/auth/refresh", { refreshToken });
     const res = {
-        data: {
-            accessToken: "new access token"
+        tokens: {
+            accessToken: "new_access_token"
         }
     }
-    const newAccessToken = res.data.accessToken;
-    localStorage.setItem("accessToken", newAccessToken);
+    localStorage.setItem("tokens", JSON.stringify(res.tokens));
 }
 
 export default RefreshHandler;

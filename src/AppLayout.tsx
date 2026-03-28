@@ -1,7 +1,6 @@
-import { ChakraProvider, createSystem, defaultConfig, HStack, Stack, Switch, Text, VStack } from '@chakra-ui/react';
+import { ChakraProvider, createSystem, defaultConfig, Stack, Switch, Text, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { HiCheck, HiX } from 'react-icons/hi';
-import { LuCopyright } from 'react-icons/lu';
 import App from './App';
 import { LoaderProvider } from './providers/LoaderProvider';
 

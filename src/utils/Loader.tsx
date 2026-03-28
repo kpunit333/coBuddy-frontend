@@ -20,7 +20,7 @@ const dialog = createOverlay<DialogProps>((props) => {
   )
 })
 
-const Loader = (show: boolean) => {
+const Loader = ({show}: {show: boolean}) => {
 
     useEffect(()=>{
         dialog.open("a", {
