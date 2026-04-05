@@ -1,8 +1,10 @@
 import {
+  Avatar,
   Box,
   Button,
   Checkbox,
   Container,
+  Float,
   Heading,
   HStack,
   IconButton,
@@ -12,9 +14,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LuEye, LuEyeOff } from 'react-icons/lu';
+import { LuEye, LuEyeOff, LuPlus } from 'react-icons/lu';
 import { post } from '../customHooks/Api';
 import { registerSchema } from '../schemas/auth';
 import type z from 'zod';
@@ -29,10 +31,40 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
     mode: "all"
   });
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string | undefined>(undefined);
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Create a local URL for previewing the image
+      setPreview(URL.createObjectURL(file));
+      console.log("Selected file:", file.name);
+    }
+  };
+
   const onSubmit = async (data: RegisterFormData) => {
     try {
       const { ...submitData } = data;
-      const response = await post("SIGNUP_URL", undefined, submitData);
+
+      const formData = new FormData();
+
+      formData.append("fullname", submitData.fullname);
+      formData.append("username", submitData.username);
+      formData.append("emailId", submitData.emailId);
+      formData.append("password", submitData.password);
+      formData.append("confirm_password", submitData.confirm_password);
+      formData.append("profileImg", fileInputRef.current?.files?.[0] ?? new Blob());
+
+      console.log(formData);
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      };
+      const response = await post("SIGNUP_URL", undefined, formData, headers);
       if (response.success) {
         console.log("registration successful");        
         switchAuthMode();
@@ -66,6 +98,23 @@ const Register = ({ switchAuthMode }: { switchAuthMode: () => void }) => {
                 Join the Nexus Network
               </Text>
             </VStack>
+
+            <Avatar.Root size={"2xl"}>
+              <Avatar.Fallback name="Uchiha Sasuke" />
+              <Avatar.Image src={preview} />
+              <Float bgColor="brand.100" border="2px solid" borderColor="brand.900" borderRadius={100} placement="bottom-end" offsetX="1.5" offsetY="1.5" p={1} cursor="pointer"
+                onClick={handleButtonClick}
+              >
+                <LuPlus color="brand.900" size={8} />
+              </Float>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="image/*"
+                style={{ display: 'none' }}
+              />
+            </Avatar.Root>
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack gap={5}>

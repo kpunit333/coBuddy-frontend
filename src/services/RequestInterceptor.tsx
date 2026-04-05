@@ -1,7 +1,7 @@
 import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import StorageService from "./StorageService";
 
-const RequestInterceptor = (axiosInstance: AxiosInstance) => {
+const RequestInterceptor = (axiosInstance: AxiosInstance, headers?: object) => {
     axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
             const tokens = StorageService.get("tokens");
@@ -11,6 +11,7 @@ const RequestInterceptor = (axiosInstance: AxiosInstance) => {
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
             };
 
+            Object.assign(config.headers, headers);
             return config;
         },
         (error) => {

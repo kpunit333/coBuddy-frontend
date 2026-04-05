@@ -3,9 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
 
-  const { user } = useAuth();
-  console.log(user);
-  
+  const { user }: { user: any } = useAuth();
 
   return (
     <>
@@ -25,7 +23,7 @@ const Header = () => {
           <Box p={0.5} border="2px solid" borderColor="brand.500" borderRadius={"30px"} >
             <Avatar.Root size={"xs"}>
               <Avatar.Fallback name="Segun Adebayo" />
-              <Avatar.Image src="https://bit.ly/sage-adebayo" />
+              <Avatar.Image src={user.profileImg ?? "https://bit.ly/sage-adebayo"} />
             </Avatar.Root>
           </Box>
         </HStack>

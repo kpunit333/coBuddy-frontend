@@ -39,7 +39,7 @@ const convertToQueryParams = (obj: any) => {
     .join("&");
 }
 
-const ApiHandler = async (urlKey: string, method: string, pathVariable?: string, queryObj?: object, body?: object): Promise<ResponseBody> => {
+const ApiHandler = async (urlKey: string, method: string, pathVariable?: string, queryObj?: object, body?: object, headers?: object): Promise<ResponseBody> => {
 
   const baseURL = environment.baseURL;
 
@@ -58,7 +58,7 @@ const ApiHandler = async (urlKey: string, method: string, pathVariable?: string,
 
   const api = AxiosInstance();
 
-  RequestInterceptor(api);
+  RequestInterceptor(api, headers);
   ResponseInterceptor(api);
 
   try {
